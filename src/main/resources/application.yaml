@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: someproject
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${db.user}
+    password: ${db.pass}
+    url: jdbc:postgresql://localhost:5678/kitty
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 7882
