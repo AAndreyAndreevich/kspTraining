@@ -1,11 +1,14 @@
 package app.controller;
 
+import app.dto.CatDto;
 import app.entity.Cat;
 import app.repository.CatRepo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "main_methods")
 @Slf4j
 @RestController
 public class MainController {
@@ -14,8 +17,12 @@ public class MainController {
     private CatRepo catRepo;
 
     @PostMapping("/create")
-    public void createCat(@RequestBody Cat cat) {
-        log.info("Создан кот: " + catRepo.save(cat));
+    public void createCat(@RequestBody CatDto catDto) {
+        log.info("Создан кот: " + catRepo.save(Cat.builder()
+                        .name(catDto.getName())
+                        .age(catDto.getAge())
+                        .weight(catDto.getWeight())
+                .build()));
     }
 
     @PutMapping("/change")
