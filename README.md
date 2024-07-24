@@ -1,1 +1,1 @@
-учусь использовать spring boot и kafka
+для понимания spring boot и kafka
