@@ -3,6 +3,7 @@ package app.controller;
 import app.dto.CatDto;
 import app.entity.Cat;
 import app.repository.CatRepo;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,10 @@ public class MainController {
     @Autowired
     private CatRepo catRepo;
 
+    @Operation(
+            summary = "Создает нового кота",
+            description = "Получает dto кота и билдером собирает и сохраняет сущность в базу данных"
+    )
     @PostMapping("/create")
     public void createCat(@RequestBody CatDto catDto) {
         log.info("Создан кот: " + catRepo.save(Cat.builder()
