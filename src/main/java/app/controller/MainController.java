@@ -30,6 +30,10 @@ public class MainController {
                 .build()));
     }
 
+    @Operation(
+            summary = "Изменяет существующего кота",
+            description = "Заменяет существующие данные кота с указанным id на новые данные"
+    )
     @PutMapping("/change")
     public String changeCat(@RequestBody Cat cat) {
         if (!catRepo.existsById(cat.getId())) {
@@ -40,21 +44,36 @@ public class MainController {
         return catRepo.save(cat).toString();
     }
 
+    @Operation(
+            summary = "Получает информацию о коте",
+            description = "Создает запрос по id в базу данных и получает данные о коте"
+    )
     @GetMapping("/getById")
     public String getCatById(@RequestParam Long id) {
         log.info("Запрошен кот по id: " + id);
         return catRepo.findById(id).orElseThrow().toString();
     }
 
+    @Operation(
+            summary = "Выводит список всех существующих котов"
+    )
     @GetMapping("/getAll")
     public String getAllCat() {
         log.info("Запрошен список всех котов");
         return catRepo.findAll().toString();
     }
 
+    @Operation(
+            summary = "Удаляет кота",
+            description = "Получает id кота, и если он существует то удаляет его из базы данных"
+    )
     @DeleteMapping("/delete")
     public void deleteCat(@RequestParam Long id) {
-        log.info("Удален кот по id: " + id);
+        if (!catRepo.existsById(id)) {
+            log.info("Был запрошен несуществующий id");
+            System.out.println("Кота с этим id не существует");
+        }
+        log.info("Кот с id: " + id + " был удален");
         catRepo.deleteById(id);
     }
 }
